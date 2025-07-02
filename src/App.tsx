@@ -8,6 +8,9 @@ import ListaCategorias from "./components/listacategorias/ListaCategorias";
 import DeletaCategoria from "./components/deletecategoria/DeletaCategoria";
 import FormCategoria from "./components/formcategoria/FormCategoria";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <>
@@ -25,6 +28,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
+        <ToastContainer />
       </BrowserRouter>
     </>
   );

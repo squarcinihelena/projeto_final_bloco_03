@@ -1,16 +1,17 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import type { Categoria } from "../../models/Categoria";
 import { buscar, buscarCategoriaNome } from "../../services/Service";
 import { DNA } from "react-loader-spinner";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import CardCategoria from "../cardcategoria/CardCategoria";
 
 function ListaCategorias() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [nomeBusca, setNomeBusca] = useState<string>("");
+  const [searchParams] = useSearchParams();
+  const nomeBuscaUrl = searchParams.get("nome");
 
-  async function buscarCategorias() {
+  async function buscarTodasCategorias() {
     setIsLoading(true);
     try {
       await buscar("/categorias", setCategorias);
@@ -22,7 +23,26 @@ function ListaCategorias() {
     }
   }
 
-  async function handleBuscarPorNome(e: FormEvent<HTMLFormElement>) {
+  async function buscarCategorias(termo: string | null) {
+    setIsLoading(true);
+    try {
+      if (termo) {
+        await buscarCategoriaNome(termo, setCategorias);
+        if (categorias.length === 0) {
+          alert("Nenhuma categoria encontrada com esse nome!");
+        }
+      } else {
+        await buscarTodasCategorias();
+      }
+    } catch (error: any) {
+      alert("Erro ao buscar categoria(s)!");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  /*async function handleBuscarPorNome(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (nomeBusca === "") {
       buscarCategorias();
@@ -40,11 +60,11 @@ function ListaCategorias() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }*/
 
   useEffect(() => {
-    buscarCategorias();
-  }, [categorias.length]);
+    buscarCategorias(nomeBuscaUrl);
+  }, [nomeBuscaUrl]);
 
   return (
     <>
@@ -64,29 +84,6 @@ function ListaCategorias() {
       <div className="flex justify-center w-full my-4 bg-gray-50 p-4 rounded-lg shadow-md">
         <div className="container flex flex-col mx-2">
           {}
-          <div className="flex justify-center mb-4">
-            <form
-              className="flex w-full max-w-lg"
-              onSubmit={handleBuscarPorNome}
-            >
-              <input
-                type="text"
-                placeholder="Pesquisar categoria por nome"
-                className="flex-1 px-4 py-2 rounded-l-lg border-2 border-gray-400 focus:outline-none focus:border-[#2d0982] text-gray-800"
-                value={nomeBusca}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setNomeBusca(e.target.value)
-                }
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 rounded-r-lg bg-[#4405a8] hover:bg-[#2d0982] text-white font-bold transition duration-300"
-              >
-                Buscar
-              </button>
-            </form>
-          </div>
-
           <div className="flex justify-end mb-4">
             <Link
               to="/cadastrarcategoria"
