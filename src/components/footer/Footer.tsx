@@ -1,4 +1,3 @@
-// src/components/footer/Footer.tsx
 import { InstagramLogo, LinkedinLogo } from "@phosphor-icons/react"; // FacebookLogo removido
 
 function Footer() {

@@ -1,4 +1,3 @@
-// src/pages/home/Home.tsx
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -49,7 +48,7 @@ function Home() {
 
           <div className="flex justify-around gap-4 mt-4">
             <Link
-              to="#"
+              to="/produtos"
               className="
                             rounded
                             text-gray-800
@@ -57,7 +56,7 @@ function Home() {
                             py-2 px-6
                             hover:bg-[#2d0982] hover:text-white transition duration-300"
             >
-              Novo Produto
+              Ver Produtos
             </Link>
           </div>
         </div>

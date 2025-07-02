@@ -1,4 +1,3 @@
-// src/components/navbar/Navbar.tsx
 import { ShoppingCart, User, MagnifyingGlass } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
@@ -18,18 +17,20 @@ function Navbar() {
             placeholder="Pesquisar produto"
             disabled
           />
-          {}
           <button className="h-9 w-9 p-2.5 ml-2 text-sm font-medium text-white bg-[#4405a8] border border-blue-700 rounded-lg cursor-not-allowed">
             <MagnifyingGlass size={18} weight="bold" />
           </button>
         </div>
 
         <div className="flex items-center gap-4 py-4">
-          <Link to="#" className="hover:underline">
+          <Link to="/categorias" className="hover:underline">
             Categorias
           </Link>
-          <Link to="#" className="hover:underline">
+          <Link to="/cadastrarcategoria" className="hover:underline">
             Cadastrar Categoria
+          </Link>
+          <Link to="/produtos" className="hover:underline">
+            Produtos
           </Link>
           <Link to="#" className="hover:underline">
             Sair
